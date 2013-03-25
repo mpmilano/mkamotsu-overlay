@@ -2,13 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
+EAPI=2
 
 inherit elisp-common
 
 DESCRIPTION="Rust is a curly-brace, block-structured expression language."
 HOMEPAGE="http://www.rust-lang.org"
-SRC_URI="http://dl.rust-lang.org/dist/rust-0.1.tar.gz"
+SRC_URI="http://dl.rust-lang.org/dist/rust-0.5.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -26,9 +26,18 @@ RDEPEND="${DEPEND}"
 SITEFILE="70${PN}-gentoo.el"
 BYTECOMPFLAGS="-L src/etc/emacs"
 
+src_configure() {
+    if [[ -x ${ECONF_SOURCE:-.}/configure ]] ; then
+        ${ECONF_SOURCE:-.}/configure
+    fi
+}
+
+
 src_compile() {
-	use emacs && elisp-compile src/etc/emacs/{cm,rust}-mode.el || die
+
+	elisp-compile src/etc/emacs/{cm,rust}-mode.el || die "elisp failed"
 	emake || die "emake failed"
+
 }
 
 src_install() {
