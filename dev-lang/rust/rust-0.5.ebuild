@@ -41,10 +41,25 @@ src_compile() {
 }
 
 src_install() {
+
+
+	emake DESTDIR="${D}" install
+	
+	if ! declare -p DOCS >/dev/null 2>&1 ; then
+		local d
+		for d in README* ChangeLog AUTHORS NEWS TODO CHANGES THANKS BUGS \
+			FAQ CREDITS CHANGELOG ; do
+			[[ -s "${d}" ]] && dodoc "${d}"
+		done
+	elif declare -p DOCS | grep -q "^declare -a " ; then
+		dodoc "${DOCS[@]}"
+	else
+		dodoc ${DOCS}
+	fi	
 	exeinto /usr/bin
-	doexe x86_64-unknown-linux-gnu/stage3/bin/rustc || die
-	doexe x86_64-unknown-linux-gnu/stage3/bin/cargo || die
-	doexe x86_64-unknown-linux-gnu/stage3/bin/rustdoc || die
+	doexe x86_64-unknown-linux-gnu/stage2/bin/rustc || die
+	doexe x86_64-unknown-linux-gnu/stage2/bin/cargo || die
+	doexe x86_64-unknown-linux-gnu/stage2/bin/rustdoc || die
 	insinto /usr/lib
 	doins x86_64-unknown-linux-gnu/stage2/lib/librustrt.so || die
 	for lib in `ls -rt1 x86_64-unknown-linux-gnu/stage2/lib/libcore-*.so | tail -1`; do
