@@ -58,7 +58,6 @@ src_install() {
 	fi	
 	exeinto /usr/bin
 	doexe x86_64-unknown-linux-gnu/stage2/bin/rustc || die
-	doexe x86_64-unknown-linux-gnu/stage2/bin/cargo || die
 	doexe x86_64-unknown-linux-gnu/stage2/bin/rustdoc || die
 	insinto /usr/lib
 	doins x86_64-unknown-linux-gnu/stage2/lib/librustrt.so || die
@@ -84,7 +83,6 @@ src_install() {
 	for lib in `ls -rt1 x86_64-unknown-linux-gnu/stage2/lib/rustc/x86_64-unknown-linux-gnu/lib/librustc-*.so | tail -1`; do
 			doins ${lib} || die
 	done
-	doins x86_64-unknown-linux-gnu/stage2/lib/rustc/x86_64-unknown-linux-gnu/lib/intrinsics.bc
 	doins x86_64-unknown-linux-gnu/stage2/lib/rustc/x86_64-unknown-linux-gnu/lib/libmorestack.a
 	if use vim-syntax ; then
 		insinto /usr/share/vim/vimfiles/syntax
