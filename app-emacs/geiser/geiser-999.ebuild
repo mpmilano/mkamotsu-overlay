@@ -9,7 +9,7 @@ EAPI="4"
 NEED_EMACS=23
 
 inherit elisp
-inherit git-2
+inherit git
 
 DESCRIPTION="Emacs modes for Scheme interaction"
 HOMEPAGE="http://www.nongnu.org/geiser/"
