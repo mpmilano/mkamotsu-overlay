@@ -20,4 +20,3 @@ src_unpack() {
     ln -s opam-* opam-1.0.0
     echo "SOMETHING IS HAPPENING"
 }
-
